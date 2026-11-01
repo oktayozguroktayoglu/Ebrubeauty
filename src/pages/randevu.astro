@@ -1,0 +1,147 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { services, WA_NUMBER, PHONE, PHONE_TEL } from '../data/site.js';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const slots = [
+  { id: 'sabah', label: 'Sabah', emoji: '☀️' },
+  { id: 'ogle', label: 'Öğleden sonra', emoji: '🌤️' },
+  { id: 'aksam', label: 'Akşam', emoji: '🌙' },
+];
+---
+<Base title="Online Randevu | Ebru Beauty Güzellik Merkezi" description="Ebru Beauty’den online randevu talebi: hizmetini, gününü ve saat aralığını seç, WhatsApp’tan gönder. Onay mesajı ile randevun kesinleşir.">
+  <section class="svc-hero rdv-hero">
+    <div class="aurora" aria-hidden="true"><span></span><span></span></div>
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Sayfa yolu"><a href={base}>Ana sayfa</a> / <span>Randevu</span></nav>
+      <p class="eyebrow"><span class="dot"></span> 30 saniyede randevu talebi</p>
+      <h1>Kendine bir <em>saat</em> ayır.</h1>
+      <p class="hero-sub">Hizmetini, gününü ve saat aralığını seç; talebin WhatsApp’ta hazır mesaj olarak açılsın. Uygunluğa göre sana dönüp randevunu onaylayalım.</p>
+    </div>
+  </section>
+
+  <div class="wrap rdv-wrap">
+    <form class="rdv" id="rdv" novalidate>
+      <fieldset>
+        <legend><span>01</span> Hangi hizmet?</legend>
+        <div class="opt-grid svc-opts">
+          {services.map((s) => (
+            <label class="opt"><input type="checkbox" name="hizmet" value={s.slug} data-title={s.title} /><span><Icon name={s.icon} size={20} /> {s.title}</span></label>
+          ))}
+        </div>
+        <p class="hint">Birden fazla seçebilirsin.</p>
+      </fieldset>
+
+      <fieldset>
+        <legend><span>02</span> Hangi gün?</legend>
+        <div class="days" id="days" role="radiogroup" aria-label="Gün seç"></div>
+        <noscript><p class="hint">Tarih seçimi için tarayıcında JavaScript açık olmalı. Dilersen doğrudan <a href={`https://wa.me/${WA_NUMBER}`}>WhatsApp’tan</a> yazabilirsin.</p></noscript>
+      </fieldset>
+
+      <fieldset>
+        <legend><span>03</span> Hangi saat aralığı?</legend>
+        <div class="opt-grid slot-opts">
+          {slots.map((t) => (
+            <label class="opt"><input type="radio" name="saat" value={t.label} /><span><b aria-hidden="true">{t.emoji}</b> {t.label}</span></label>
+          ))}
+          <label class="opt"><input type="radio" name="saat" value="Fark etmez" /><span><b aria-hidden="true">✨</b> Fark etmez</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend><span>04</span> Seni tanıyalım</legend>
+        <div class="fields">
+          <label class="field"><span>Adın</span><input type="text" name="ad" autocomplete="given-name" required maxlength="60" placeholder="Örn. Ayşe" /></label>
+          <label class="field"><span>Not <small>(isteğe bağlı)</small></span><textarea name="not" rows="3" maxlength="300" placeholder="Örn. İlk kez geleceğim, kalıcı oje de düşünüyorum"></textarea></label>
+        </div>
+        <label class="check"><input type="checkbox" name="kvkk" required /> <span><a href={`${base}kvkk/`} target="_blank">Aydınlatma metnini</a> okudum; randevu talebim için bilgilerimin WhatsApp üzerinden iletilmesini kabul ediyorum.</span></label>
+      </fieldset>
+
+      <p class="form-err" id="err" role="alert" hidden></p>
+      <button class="pill pill-gold big rdv-btn" type="submit"><Icon name="whatsapp" size={20} /> WhatsApp’tan talep gönder</button>
+      <p class="hint center">Talebin, sana onay mesajı gönderdiğimizde kesinleşir.</p>
+    </form>
+
+    <aside class="svc-side">
+      <div class="side-card">
+        <p class="eyebrow dark"><span class="dot"></span> Özetin</p>
+        <ul class="sum" id="sum">
+          <li><small>Hizmet</small><span data-k="hizmet">Seçilmedi</span></li>
+          <li><small>Gün</small><span data-k="gun">Seçilmedi</span></li>
+          <li><small>Saat</small><span data-k="saat">Seçilmedi</span></li>
+        </ul>
+      </div>
+      <div class="side-card light">
+        <h3>Acele mi var?</h3>
+        <p class="side-p">Aynı gün için en hızlısı telefon.</p>
+        <a class="side-phone dark" href={PHONE_TEL}><Icon name="phone" size={18} /> {PHONE}</a>
+      </div>
+    </aside>
+  </div>
+</Base>
+
+<script define:vars={{ WA_NUMBER }}>
+  const form = document.getElementById('rdv');
+  const daysEl = document.getElementById('days');
+  const err = document.getElementById('err');
+  const sum = (k, v) => { document.querySelector(`#sum [data-k="${k}"]`).textContent = v || 'Seçilmedi'; };
+
+  // Önümüzdeki 14 gün (İstanbul saatine göre)
+  const tz = 'Europe/Istanbul';
+  const fmtDay = new Intl.DateTimeFormat('tr-TR', { timeZone: tz, weekday: 'short' });
+  const fmtNum = new Intl.DateTimeFormat('tr-TR', { timeZone: tz, day: 'numeric' });
+  const fmtMon = new Intl.DateTimeFormat('tr-TR', { timeZone: tz, month: 'short' });
+  const fmtFull = new Intl.DateTimeFormat('tr-TR', { timeZone: tz, day: 'numeric', month: 'long', weekday: 'long' });
+  const now = Date.now();
+  for (let i = 0; i < 14; i++) {
+    const d = new Date(now + i * 864e5);
+    const full = fmtFull.format(d);
+    const lab = document.createElement('label');
+    lab.className = 'day';
+    lab.innerHTML = `<input type="radio" name="gun"><span><small>${i === 0 ? 'Bugün' : i === 1 ? 'Yarın' : fmtDay.format(d)}</small><b>${fmtNum.format(d)}</b><small>${fmtMon.format(d)}</small></span>`;
+    lab.querySelector('input').value = full;
+    daysEl.append(lab);
+  }
+
+  // Hizmet sayfasından gelindiyse ön seçim: /randevu/?hizmet=hydrafacial
+  const pre = new URLSearchParams(location.search).get('hizmet');
+  if (pre) { const box = form.querySelector(`input[name="hizmet"][value="${CSS.escape(pre)}"]`); if (box) box.checked = true; }
+
+  const selected = () => [...form.querySelectorAll('input[name="hizmet"]:checked')].map((x) => x.dataset.title);
+  const update = () => {
+    sum('hizmet', selected().join(', '));
+    sum('gun', form.gun?.value || (form.querySelector('input[name="gun"]:checked')?.value));
+    sum('saat', form.querySelector('input[name="saat"]:checked')?.value);
+  };
+  form.addEventListener('change', update);
+  update();
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const hz = selected();
+    const gun = form.querySelector('input[name="gun"]:checked')?.value;
+    const saat = form.querySelector('input[name="saat"]:checked')?.value;
+    const ad = form.ad.value.trim();
+    const not = form.not.value.trim();
+    const miss = [];
+    if (!hz.length) miss.push('hizmet');
+    if (!gun) miss.push('gün');
+    if (!saat) miss.push('saat aralığı');
+    if (!ad) miss.push('adın');
+    if (miss.length) { err.textContent = `Lütfen şunları da seç: ${miss.join(', ')}.`; err.hidden = false; return; }
+    if (!form.kvkk.checked) { err.textContent = 'Devam etmek için aydınlatma metnini onaylaman gerekiyor.'; err.hidden = false; return; }
+    err.hidden = true;
+    const msg = [
+      'Merhaba! Web sitenizden randevu talebi 🦋',
+      '',
+      `• Hizmet: ${hz.join(', ')}`,
+      `• Gün: ${gun}`,
+      `• Saat: ${saat}`,
+      `• Ad: ${ad}`,
+      ...(not ? [`• Not: ${not}`] : []),
+      '',
+      'Uygunluk durumunu yazabilir misiniz?',
+    ].join('\n');
+    window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+  });
+</script>

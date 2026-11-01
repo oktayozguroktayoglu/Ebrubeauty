@@ -19,7 +19,7 @@ const quiz = concerns.map((c) => ({ ...c, title: byslug[c.service].title, text: 
         <h1>Kendine iyi bak,<br /><em>ışıltını</em> göster.</h1>
         <p class="hero-sub">Cilt bakımından lazer epilasyona, Hydrafacial’dan nail art’a. Sakin, temiz ve tamamen sana ayrılmış bir saat. ✦</p>
         <div class="hero-cta">
-          <a class="pill pill-gold big" href={wa()} target="_blank" rel="noopener"><Icon name="whatsapp" size={20} /> WhatsApp’tan randevu</a>
+          <a class="pill pill-gold big" href={`${base}randevu/`}><Icon name="star" size={20} /> Online randevu al</a>
           <a class="pill pill-ghost big" href={INSTAGRAM_URL} target="_blank" rel="noopener"><Icon name="instagram" size={20} /> @{INSTAGRAM}</a>
         </div>
         <ul class="hero-tags" aria-label="Öne çıkan hizmetler">
@@ -90,7 +90,7 @@ const quiz = concerns.map((c) => ({ ...c, title: byslug[c.service].title, text: 
               <p class="answer-kicker">Senin için önerimiz</p>
               <h3>{q.title}</h3>
               <p>{q.text}</p>
-              <div class="answer-cta"><a class="pill pill-gold" href={q.wa} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /> Bunu sor</a><a class="pill pill-ghost" href={`${base}${q.service}/`}>Detaylı incele</a></div>
+              <div class="answer-cta"><a class="pill pill-gold" href={`${base}randevu/?hizmet=${q.service}`}><Icon name="star" size={18} /> Randevu al</a><a class="pill pill-ghost" href={q.wa} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /> Sor</a><a class="pill pill-ghost" href={`${base}${q.service}/`}>Detaylı incele</a></div>
             </div>
           ))}
         </div>
@@ -149,8 +149,8 @@ const quiz = concerns.map((c) => ({ ...c, title: byslug[c.service].title, text: 
       <div class="reveal">
         <p class="eyebrow"><span class="dot"></span> Randevu</p>
         <h2>{TAGLINE}<em>.</em></h2>
-        <p class="muted-l">Randevu ve fiyat bilgisi için en hızlı yol WhatsApp.</p>
-        <a class="pill pill-gold big" href={wa()} target="_blank" rel="noopener"><Icon name="whatsapp" size={20} /> WhatsApp’tan yaz</a>
+        <p class="muted-l">Online randevu formunu doldur ya da fiyat bilgisi için WhatsApp’tan yaz.</p>
+        <div class="hero-cta"><a class="pill pill-gold big" href={`${base}randevu/`}><Icon name="star" size={20} /> Online randevu al</a><a class="pill pill-ghost big" href={wa()} target="_blank" rel="noopener"><Icon name="whatsapp" size={20} /> WhatsApp</a></div>
       </div>
       <ul class="contact-list reveal">
         <li><a href={PHONE_TEL}><span class="ic"><Icon name="phone" /></span><span><small>Telefon</small>{PHONE}</span></a></li>

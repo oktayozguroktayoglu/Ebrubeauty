@@ -36,8 +36,8 @@ const waMsg = wa(`Merhaba! ${s.title} hakkında bilgi ve randevu almak istiyorum
         <h1>{s.title}</h1>
         <p class="hero-sub">{d.lead}</p>
         <div class="hero-cta">
-          <a class="pill pill-gold big" href={waMsg} target="_blank" rel="noopener"><Icon name="whatsapp" size={20} /> WhatsApp’tan sor</a>
-          <a class="pill pill-ghost big" href={PHONE_TEL}><Icon name="phone" size={20} /> {PHONE}</a>
+          <a class="pill pill-gold big" href={`${base}randevu/?hizmet=${s.slug}`}><Icon name="star" size={20} /> Randevu al</a>
+          <a class="pill pill-ghost big" href={waMsg} target="_blank" rel="noopener"><Icon name="whatsapp" size={20} /> WhatsApp’tan sor</a>
         </div>
       </div>
       <figure class="svc-hero-img">
@@ -77,7 +77,8 @@ const waMsg = wa(`Merhaba! ${s.title} hakkında bilgi ve randevu almak istiyorum
         <p class="eyebrow dark"><span class="dot"></span> Randevu</p>
         <h3>{s.title} için yer ayıralım mı?</h3>
         <p>Fiyat ve uygun saatler için bize yaz, hemen dönelim.</p>
-        <a class="pill pill-gold" href={waMsg} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /> WhatsApp</a>
+        <a class="pill pill-gold" href={`${base}randevu/?hizmet=${s.slug}`}><Icon name="star" size={18} /> Online randevu al</a>
+        <a class="side-phone" href={waMsg} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /> WhatsApp’tan sor</a>
         <a class="side-phone" href={PHONE_TEL}><Icon name="phone" size={18} /> {PHONE}</a>
       </div>
       <div class="side-card light">

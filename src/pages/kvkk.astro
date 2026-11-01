@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import { FULL_NAME, PHONE, PHONE_TEL, ADDRESS } from '../data/site.js';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base title="KVKK Aydınlatma Metni | Ebru Beauty" description="Ebru Beauty Güzellik Merkezi randevu talepleri için kişisel verilerin işlenmesine ilişkin aydınlatma metni.">
+  <section class="svc-hero rdv-hero">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Sayfa yolu"><a href={base}>Ana sayfa</a> / <span>KVKK</span></nav>
+      <h1>Aydınlatma Metni</h1>
+      <p class="hero-sub">6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında randevu talepleri hakkında bilgilendirme</p>
+    </div>
+  </section>
+  <article class="wrap legal">
+    <h2>Veri sorumlusu</h2>
+    <p>Bu metin, {FULL_NAME} (“Ebru Beauty”) tarafından hazırlanmıştır.{ADDRESS && ` Adres: ${ADDRESS}.`} İletişim: <a href={PHONE_TEL}>{PHONE}</a>.</p>
+
+    <h2>Hangi verileri işliyoruz?</h2>
+    <p>Web sitemizdeki randevu formunu kullandığında; adın, seçtiğin hizmet, tarih ve saat aralığı ile isteğe bağlı olarak yazdığın not, WhatsApp üzerinden bize gönderdiğin mesaj aracılığıyla tarafımıza ulaşır. Mesajı gönderdiğin WhatsApp hesabına bağlı telefon numaran da bu yolla bize iletilir.</p>
+    <p>Web sitemiz bu bilgileri kendi sunucusunda saklamaz; form yalnızca mesajı WhatsApp’ta hazırlar, göndermek senin onayınla gerçekleşir. Lütfen not alanına sağlık durumuna ilişkin ayrıntılar yazma; gerekiyorsa bunları seans öncesinde yüz yüze konuşuruz.</p>
+
+    <h2>Hangi amaçla?</h2>
+    <ul>
+      <li>Randevu talebini değerlendirmek, uygun gün ve saati seninle planlamak,</li>
+      <li>Randevu onayı, değişikliği ya da iptaliyle ilgili seninle iletişime geçmek.</li>
+    </ul>
+
+    <h2>Hukuki sebep</h2>
+    <p>Verilerin, KVKK m.5/2-c uyarınca talep ettiğin hizmete ilişkin sözleşmenin kurulması ve ifası için gerekli olması ve m.5/2-f uyarınca meşru menfaatimiz kapsamında işlenir.</p>
+
+    <h2>Aktarım</h2>
+    <p>Verilerin, iletişim kanalı olarak kullanılan WhatsApp hizmeti (WhatsApp LLC / Meta Platforms) üzerinden iletilir. Bu hizmetin sunucuları yurt dışında bulunabilir. Verilerin bunun dışında üçüncü kişilerle paylaşılmaz; kanunen yetkili kurumların talebi saklıdır.</p>
+
+    <h2>Saklama süresi</h2>
+    <p>Randevu yazışmaları, randevunun tamamlanmasından sonra işlem amacının gerektirdiği makul süre boyunca saklanır ve sonrasında silinir.</p>
+
+    <h2>Hakların</h2>
+    <p>KVKK m.11 uyarınca; verilerinin işlenip işlenmediğini öğrenme, bilgi talep etme, düzeltilmesini veya silinmesini isteme, itiraz etme ve zararın giderilmesini talep etme haklarına sahipsin. Taleplerini <a href={PHONE_TEL}>{PHONE}</a> numarasından bize iletebilirsin.</p>
+  </article>
+</Base>

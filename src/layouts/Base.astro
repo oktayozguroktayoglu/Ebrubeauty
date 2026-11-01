@@ -50,7 +50,7 @@ const ld = { '@context': 'https://schema.org', '@type': 'BeautySalon', name: FUL
         <a href={`${base}#mekan`}>Mekan</a>
         <a href={`${base}#iletisim`}>İletişim</a>
       </nav>
-      <a class="pill pill-gold nav-cta" href={wa()} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /> Randevu al</a>
+      <a class="pill pill-gold nav-cta" href={`${base}randevu/`}><Icon name="star" size={18} /> Randevu al</a>
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mmenu" aria-label="Menüyü aç"><Icon name="menu" /></button>
     </div>
     <div class="mmenu" id="mmenu" hidden>
@@ -61,7 +61,7 @@ const ld = { '@context': 'https://schema.org', '@type': 'BeautySalon', name: FUL
       <a href={`${base}#test`}>Sana hangisi?</a>
       <a href={`${base}#mekan`}>Mekan</a>
       <a href={`${base}#iletisim`}>İletişim</a>
-      <a class="pill pill-gold" href={wa()} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /> WhatsApp’tan randevu al</a>
+      <a class="pill pill-gold" href={`${base}randevu/`}><Icon name="star" size={18} /> Online randevu al</a>
     </div>
   </header>
 
@@ -83,7 +83,7 @@ const ld = { '@context': 'https://schema.org', '@type': 'BeautySalon', name: FUL
         <li><a href={mapsLink()} target="_blank" rel="noopener"><Icon name="pin" size={18} /> {ADDRESS || 'Haritada gör'}</a></li>
       </ul>
     </div>
-    <p class="wrap copy">© {new Date().getFullYear()} {FULL_NAME}</p>
+    <p class="wrap copy">© {new Date().getFullYear()} {FULL_NAME} · <a href={`${base}randevu/`}>Randevu</a> · <a href={`${base}kvkk/`}>KVKK Aydınlatma Metni</a></p>
   </footer>
 
   <a class="fab" href={wa()} target="_blank" rel="noopener" aria-label="WhatsApp’tan yaz"><Icon name="whatsapp" size={28} /></a>
