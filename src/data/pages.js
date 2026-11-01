@@ -36,7 +36,7 @@ export const pages = {
   hydrafacial: {
     seoTitle: 'Hydrafacial | Ebru Beauty Güzellik Merkezi',
     seoDesc: 'Hydrafacial ile tek seansta temizle, arındır, nemlendir. Etkinlik öncesi ışıltı için favori bakım. Ebru Beauty’de randevu: 0537 916 10 36.',
-    hero: { img: '31251033', alt: 'Beyaz zemin üzerinde damlalıklı serum şişesi' },
+    hero: { img: '8100816', alt: 'Seramik tabak üzerinde damlalıklı bakım şişesi' },
     lead: 'Hydrafacial; temizlik, arındırma ve yoğun nemi tek seansta birleştiren, cildine anında ferahlık ve ışıltı kazandıran popüler bir bakım. Bakımdan sonra sosyal hayatına hemen dönebilirsin.',
     sections: [
       { h: 'Hydrafacial nedir?', p: [
@@ -60,7 +60,7 @@ export const pages = {
       ['Sonucu ne zaman görürüm?', 'Pek çok kişi ilk seanstan sonra cildinde ferahlık ve parlaklık fark eder. Kalıcı etki için düzenli seanslar önerilir.'],
       ['Etkinlikten ne kadar önce yaptırmalıyım?', 'Birkaç gün önce yaptırmak, cildinin dinlenmesi için iyi bir zamanlamadır. En uygun günü birlikte planlayalım.'],
       ['Klasik cilt bakımından farkı ne?', 'Hydrafacial cihaz destekli ve daha hızlıdır; temizlik ile nem adımlarını tek uygulamada birleştirir.'] ],
-    gallery: [{ own: 'room', alt: 'Ebru Beauty bakım odası: Hydrafacial cihazı ve LED maske' }, { img: '8100816', alt: 'Seramik tabak üzerinde damlalıklı bakım şişesi' }],
+    gallery: [{ own: 'room', alt: 'Ebru Beauty bakım odası: Hydrafacial cihazı ve LED maske' }],
   },
 
   'lazer-epilasyon': {
@@ -134,7 +134,7 @@ export const pages = {
       ['Uygulama sırasında ne hissederim?', 'Genellikle sıcaklık ve masaj hissi olur; uygulama konforuna göre ayarlanır.'],
       ['Kimler yaptırmamalı?', 'Hamilelik, emzirme ve bazı sağlık durumlarında uygulama önerilmez. Sağlık durumunu seans öncesinde mutlaka belirt; gerekirse doktoruna danış.'],
       ['G5 ile birlikte yapılır mı?', 'Evet, birlikte planlanabilir.'] ],
-    gallery: [{ img: '6187653', alt: 'Vücut masajı uygulaması' }],
+    gallery: [],
   },
 
   'protez-tirnak': {
@@ -168,7 +168,7 @@ export const pages = {
   'kalici-makyaj': {
     seoTitle: 'Kalıcı Makyaj: Kaş, Dudak, Dipliner | Ebru Beauty',
     seoDesc: 'Yüz hatlarına uygun kalıcı kaş tasarımı, dudak renklendirme ve dipliner. Sabah rutinin kısalsın. Ebru Beauty’de randevu: 0537 916 10 36.',
-    hero: { img: '5881083', alt: 'Pembe zemin üzerinde kaş ve makyaj fırçaları' },
+    hero: { img: '212236', alt: 'Beyaz zemin üzerinde makyaj fırçaları ve araçları' },
     lead: 'Uyandığın an hazır ol. Kalıcı makyaj; kaş, dudak ve göz çevresinde doğal görünümlü, uzun süreli bir tanım kazandırır ve sabah rutinini kısaltır.',
     sections: [
       { h: 'Hangi uygulamalar var?', list: [
@@ -187,7 +187,7 @@ export const pages = {
       ['Doğal görünür mü?', 'Amaç yüzüne uygun, doğal bir görünüm elde etmektir. Tasarımı uygulamadan önce birlikte onaylarız.'],
       ['Acı hissedilir mi?', 'Hassasiyet kişiden kişiye değişir; uygulama sırasında konforun ön planda tutulur.'],
       ['Kimler yaptırmamalı?', 'Hamilelik, emzirme ve bazı sağlık durumlarında uygulama önerilmez. Sağlık durumunu seans öncesinde mutlaka paylaş.'] ],
-    gallery: [{ img: '212236', alt: 'Beyaz zemin üzerinde makyaj fırçaları ve araçları' }],
+    gallery: [],
   },
 };
 
