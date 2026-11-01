@@ -9,7 +9,7 @@ import { services, NAME, FULL_NAME, PHONE, PHONE_TEL, INSTAGRAM, INSTAGRAM_URL, 
 const { ogImage = 'img/lounge.jpg', jsonLd = [], title = `${FULL_NAME} | Cilt Bakımı, Hydrafacial, Lazer Epilasyon`, description = `${FULL_NAME}: cilt bakımı, Hydrafacial, lazer epilasyon, G5 selülit, bölgesel incelme, protez tırnak ve kalıcı makyaj. Randevu: ${PHONE}.` } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
-const ld = { '@context': 'https://schema.org', '@type': 'BeautySalon', name: FULL_NAME, telephone: '+905379161036', url: new URL(base, Astro.site).href, image: new URL(base + 'img/lounge.jpg', Astro.site).href, sameAs: [INSTAGRAM_URL], slogan: SLOGAN, ...(ADDRESS ? { address: ADDRESS } : {}) };
+const ld = { '@context': 'https://schema.org', '@type': 'BeautySalon', name: FULL_NAME, telephone: '+905379161036', url: new URL(base, Astro.site).href, image: new URL(base + 'img/lounge.jpg', Astro.site).href, sameAs: [INSTAGRAM_URL], slogan: SLOGAN, openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] }], ...(ADDRESS ? { address: ADDRESS } : {}) };
 ---
 <!doctype html>
 <html lang="tr">

@@ -35,6 +35,7 @@ const slots = [
       <fieldset>
         <legend><span>02</span> Hangi gün?</legend>
         <div class="days" id="days" role="radiogroup" aria-label="Gün seç"></div>
+        <p class="hint">Pazar günleri kapalıyız.</p>
         <noscript><p class="hint">Tarih seçimi için tarayıcında JavaScript açık olmalı. Dilersen doğrudan <a href={`https://wa.me/${WA_NUMBER}`}>WhatsApp’tan</a> yazabilirsin.</p></noscript>
       </fieldset>
 
@@ -92,9 +93,14 @@ const slots = [
   const fmtNum = new Intl.DateTimeFormat('tr-TR', { timeZone: tz, day: 'numeric' });
   const fmtMon = new Intl.DateTimeFormat('tr-TR', { timeZone: tz, month: 'short' });
   const fmtFull = new Intl.DateTimeFormat('tr-TR', { timeZone: tz, day: 'numeric', month: 'long', weekday: 'long' });
+  // Önümüzdeki 14 açık gün; pazar günleri kapalı
+  const CLOSED = ['Sun'];
+  const fmtWk = new Intl.DateTimeFormat('en-US', { timeZone: tz, weekday: 'short' });
   const now = Date.now();
-  for (let i = 0; i < 14; i++) {
+  for (let i = 0, added = 0; added < 14 && i < 30; i++) {
     const d = new Date(now + i * 864e5);
+    if (CLOSED.includes(fmtWk.format(d))) continue;
+    added++;
     const full = fmtFull.format(d);
     const lab = document.createElement('label');
     lab.className = 'day';
