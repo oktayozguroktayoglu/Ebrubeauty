@@ -16,6 +16,10 @@ export const ADDRESS = '';
 export const MAPS_URL = '';
 export const mapsLink = () => MAPS_URL || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(FULL_NAME)}`;
 
+// Çalışma saatleri
+export const HOURS_TEXT = 'Pazartesi – Cumartesi 09:00 – 19:00 · Pazar kapalı';
+export const SLOTS = ['09:00 – 11:00', '11:00 – 13:00', '13:00 – 15:00', '15:00 – 17:00', '17:00 – 19:00'];
+
 export const wa = (text = 'Merhaba, randevu almak istiyorum ✨') => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
 
 // Hizmetler: tabeladaki ve kartvizitteki işlemler

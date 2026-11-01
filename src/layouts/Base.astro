@@ -5,11 +5,11 @@ import '@fontsource-variable/manrope';
 import '../styles/global.css';
 import Butterfly from '../components/Butterfly.astro';
 import Icon from '../components/Icon.astro';
-import { services, NAME, FULL_NAME, PHONE, PHONE_TEL, INSTAGRAM, INSTAGRAM_URL, wa, SLOGAN, ADDRESS, mapsLink } from '../data/site.js';
+import { HOURS_TEXT, services, NAME, FULL_NAME, PHONE, PHONE_TEL, INSTAGRAM, INSTAGRAM_URL, wa, SLOGAN, ADDRESS, mapsLink } from '../data/site.js';
 const { ogImage = 'img/lounge.jpg', jsonLd = [], title = `${FULL_NAME} | Cilt Bakımı, Hydrafacial, Lazer Epilasyon`, description = `${FULL_NAME}: cilt bakımı, Hydrafacial, lazer epilasyon, G5 selülit, bölgesel incelme, protez tırnak ve kalıcı makyaj. Randevu: ${PHONE}.` } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
-const ld = { '@context': 'https://schema.org', '@type': 'BeautySalon', name: FULL_NAME, telephone: '+905379161036', url: new URL(base, Astro.site).href, image: new URL(base + 'img/lounge.jpg', Astro.site).href, sameAs: [INSTAGRAM_URL], slogan: SLOGAN, openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] }], ...(ADDRESS ? { address: ADDRESS } : {}) };
+const ld = { '@context': 'https://schema.org', '@type': 'BeautySalon', name: FULL_NAME, telephone: '+905379161036', url: new URL(base, Astro.site).href, image: new URL(base + 'img/lounge.jpg', Astro.site).href, sameAs: [INSTAGRAM_URL], slogan: SLOGAN, openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '09:00', closes: '19:00' }], ...(ADDRESS ? { address: ADDRESS } : {}) };
 ---
 <!doctype html>
 <html lang="tr">
@@ -81,6 +81,7 @@ const ld = { '@context': 'https://schema.org', '@type': 'BeautySalon', name: FUL
         <li><a href={wa()} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /> WhatsApp</a></li>
         <li><a href={INSTAGRAM_URL} target="_blank" rel="noopener"><Icon name="instagram" size={18} /> @{INSTAGRAM}</a></li>
         <li><a href={mapsLink()} target="_blank" rel="noopener"><Icon name="pin" size={18} /> {ADDRESS || 'Haritada gör'}</a></li>
+        <li class="foot-hours"><Icon name="star" size={18} /> {HOURS_TEXT}</li>
       </ul>
     </div>
     <p class="wrap copy">© {new Date().getFullYear()} {FULL_NAME} · <a href={`${base}randevu/`}>Randevu</a> · <a href={`${base}kvkk/`}>KVKK Aydınlatma Metni</a></p>

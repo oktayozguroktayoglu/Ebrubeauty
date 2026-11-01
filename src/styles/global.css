@@ -340,3 +340,8 @@ em{font-style:italic;color:var(--gold)}
 .opt,.day{position:relative}
 html,body{overflow-x:clip}
 @media (max-width:600px){.svc-opts{grid-template-columns:1fr 1fr}.slot-opts{grid-template-columns:1fr 1fr}.opt span{padding:12px;font-size:15px}}
+.foot-hours{display:flex;align-items:center;gap:10px;font-size:14px;max-width:260px}
+.hours-row{display:flex;align-items:center;gap:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:18px 20px}
+.hours-row span:last-child{font-weight:700;font-size:18px}
+.hours-row .closed{font-style:normal;font-weight:600;font-size:15px;color:var(--lilac)}
+.slot-opts{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}

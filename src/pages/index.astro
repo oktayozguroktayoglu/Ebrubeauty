@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import Butterfly from '../components/Butterfly.astro';
-import { services, concerns, gallery, wa, PHONE, PHONE_TEL, INSTAGRAM, INSTAGRAM_URL, ADDRESS, mapsLink, TAGLINE } from '../data/site.js';
+import { HOURS_TEXT, services, concerns, gallery, wa, PHONE, PHONE_TEL, INSTAGRAM, INSTAGRAM_URL, ADDRESS, mapsLink, TAGLINE } from '../data/site.js';
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const src = (id) => `${base}img/${id}-800.webp`;
 const set = (id) => `${base}img/${id}-800.webp 800w, ${base}img/${id}-1600.webp 1600w`;
@@ -156,6 +156,7 @@ const quiz = concerns.map((c) => ({ ...c, title: byslug[c.service].title, text: 
         <li><a href={PHONE_TEL}><span class="ic"><Icon name="phone" /></span><span><small>Telefon</small>{PHONE}</span></a></li>
         <li><a href={INSTAGRAM_URL} target="_blank" rel="noopener"><span class="ic"><Icon name="instagram" /></span><span><small>Instagram</small>@{INSTAGRAM}</span></a></li>
         <li><a href={mapsLink()} target="_blank" rel="noopener"><span class="ic"><Icon name="pin" /></span><span><small>Adres</small>{ADDRESS || 'Google Haritalar’da yol tarifi al'}</span></a></li>
+        <li><div class="hours-row"><span class="ic"><Icon name="star" /></span><span><small>Çalışma saatleri</small>Pzt – Cmt 09:00 – 19:00<br /><em class="closed">Pazar kapalı</em></span></div></li>
       </ul>
     </div>
   </section>
