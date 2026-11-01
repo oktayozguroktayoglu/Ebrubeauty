@@ -1,0 +1,171 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Butterfly from '../components/Butterfly.astro';
+import { services, concerns, gallery, wa, PHONE, PHONE_TEL, INSTAGRAM, INSTAGRAM_URL, ADDRESS, mapsLink, TAGLINE } from '../data/site.js';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const src = (id) => `${base}img/${id}-800.webp`;
+const set = (id) => `${base}img/${id}-800.webp 800w, ${base}img/${id}-1600.webp 1600w`;
+const byslug = Object.fromEntries(services.map((s) => [s.slug, s]));
+const quiz = concerns.map((c) => ({ ...c, title: byslug[c.service].title, text: byslug[c.service].short, wa: wa(`Merhaba! "${c.label}" dedim, ${byslug[c.service].title} hakkında bilgi almak istiyorum ✨`) }));
+---
+<Base>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="wrap hero-in">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="dot"></span> Butik güzellik merkezi</p>
+        <h1>Kendine iyi bak,<br /><em>ışıltını</em> göster.</h1>
+        <p class="hero-sub">Cilt bakımından lazer epilasyona, Hydrafacial’dan nail art’a. Sakin, temiz ve tamamen sana ayrılmış bir saat. ✦</p>
+        <div class="hero-cta">
+          <a class="pill pill-gold big" href={wa()} target="_blank" rel="noopener"><Icon name="whatsapp" size={20} /> WhatsApp’tan randevu</a>
+          <a class="pill pill-ghost big" href={INSTAGRAM_URL} target="_blank" rel="noopener"><Icon name="instagram" size={20} /> @{INSTAGRAM}</a>
+        </div>
+        <ul class="hero-tags" aria-label="Öne çıkan hizmetler">
+          <li>#hydrafacial</li><li>#lazerepilasyon</li><li>#nailart</li><li>#glowup</li>
+        </ul>
+      </div>
+      <div class="hero-art">
+        <figure class="arch">
+          <img src={src('lounge')} srcset={set('lounge')} sizes="(max-width: 900px) 80vw, 420px" alt={gallery[0].alt} width="800" height="800" fetchpriority="high" />
+        </figure>
+        <figure class="bubble">
+          <img src={src('room')} srcset={set('room')} sizes="200px" alt={gallery[1].alt} width="800" height="800" />
+        </figure>
+        <span class="sticker s1">Hydrafacial ✦</span>
+        <span class="sticker s2">💅 Nail art</span>
+        <span class="sticker s3"><Butterfly size={26} /> glow mode: on</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="track">
+      {[0, 1].map(() => services.map((s) => <span>{s.title} <b>✦</b></span>))}
+    </div>
+  </div>
+
+  <!-- HİZMETLER -->
+  <section class="section" id="hizmetler">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow dark"><span class="dot"></span> Menü</p>
+        <h2>Bugün kendine <em>ne</em> ısmarlıyorsun?</h2>
+        <p>Her işlem, cildin ve beklentin konuşularak planlanır. Fiyat ve seans bilgisi için bize yazman yeterli.</p>
+      </div>
+      <ul class="bento">
+        {services.map((s, i) => (
+          <li class={`card c${i} reveal`}>
+            <div class="card-top"><span class="ic"><Icon name={s.icon} size={26} /></span><span class="tag">#{s.tag}</span></div>
+            <h3>{s.title}</h3>
+            <p>{s.short}</p>
+            <details><summary>Detay</summary><p>{s.detail}</p></details>
+            <a class="card-link" href={wa(`Merhaba! ${s.title} hakkında bilgi ve randevu almak istiyorum ✨`)} target="_blank" rel="noopener">Bilgi al <Icon name="arrow" size={18} /></a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- TEST -->
+  <section class="section quiz" id="test">
+    <div class="wrap quiz-in">
+      <div class="reveal">
+        <p class="eyebrow"><span class="dot"></span> 10 saniyelik test</p>
+        <h2>Sana hangisi <em>uygun?</em></h2>
+        <p class="muted-l">Derdini seç, sana uygun bakımı söyleyelim. Gerisini WhatsApp’ta konuşuruz.</p>
+      </div>
+      <div class="quiz-box reveal">
+        <div class="chips" role="radiogroup" aria-label="Derdini seç">
+          {quiz.map((q, i) => <button type="button" role="radio" aria-checked="false" class="qchip" data-i={i}><span aria-hidden="true">{q.emoji}</span> {q.label}</button>)}
+        </div>
+        <div class="answer" aria-live="polite">
+          <p class="answer-empty">👆 Yukarıdan bir tane seç</p>
+          {quiz.map((q, i) => (
+            <div class="answer-card" data-i={i} hidden>
+              <p class="answer-kicker">Senin için önerimiz</p>
+              <h3>{q.title}</h3>
+              <p>{q.text}</p>
+              <a class="pill pill-gold" href={q.wa} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /> Bunu sor</a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEKAN -->
+  <section class="section" id="mekan">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow dark"><span class="dot"></span> Mekan</p>
+        <h2>Lila duvarlar, yeşil manzara, <em>sakin</em> bir mola.</h2>
+      </div>
+      <div class="gal">
+        {gallery.map((g, i) => (
+          <figure class={`g g${i} reveal`}>
+            <img src={src(g.id)} srcset={set(g.id)} sizes="(max-width: 700px) 100vw, 50vw" alt={g.alt} width="800" height="800" loading="lazy" />
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- NASIL -->
+  <section class="section steps-sec">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow dark"><span class="dot"></span> Nasıl çalışıyoruz</p>
+        <h2>Üç adımda <em>ışılda.</em></h2>
+      </div>
+      <ol class="steps">
+        <li class="reveal"><span>01</span><h3>Bize yaz</h3><p>WhatsApp ya da Instagram’dan merhaba de, ne istediğini anlat.</p></li>
+        <li class="reveal"><span>02</span><h3>Planı birlikte yapalım</h3><p>Cildine ve programına uygun işlem ile saati birlikte belirleyelim.</p></li>
+        <li class="reveal"><span>03</span><h3>Gel, keyfini çıkar</h3><p>Sakin bir ortamda, sana ayrılmış zamanda bakımını yaptıralım.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- INSTAGRAM -->
+  <section class="section">
+    <div class="wrap">
+      <a class="ig reveal" href={INSTAGRAM_URL} target="_blank" rel="noopener">
+        <div>
+          <p class="eyebrow"><span class="dot"></span> Takipte kal</p>
+          <h2>Önce/sonra’lar, kampanyalar, yeni işlemler: hepsi <em>@{INSTAGRAM}</em>’ta.</h2>
+        </div>
+        <span class="ig-btn"><Icon name="instagram" size={34} /></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- İLETİŞİM -->
+  <section class="section contact" id="iletisim">
+    <div class="wrap contact-in">
+      <div class="reveal">
+        <p class="eyebrow"><span class="dot"></span> Randevu</p>
+        <h2>{TAGLINE}<em>.</em></h2>
+        <p class="muted-l">Randevu ve fiyat bilgisi için en hızlı yol WhatsApp.</p>
+        <a class="pill pill-gold big" href={wa()} target="_blank" rel="noopener"><Icon name="whatsapp" size={20} /> WhatsApp’tan yaz</a>
+      </div>
+      <ul class="contact-list reveal">
+        <li><a href={PHONE_TEL}><span class="ic"><Icon name="phone" /></span><span><small>Telefon</small>{PHONE}</span></a></li>
+        <li><a href={INSTAGRAM_URL} target="_blank" rel="noopener"><span class="ic"><Icon name="instagram" /></span><span><small>Instagram</small>@{INSTAGRAM}</span></a></li>
+        <li><a href={mapsLink()} target="_blank" rel="noopener"><span class="ic"><Icon name="pin" /></span><span><small>Adres</small>{ADDRESS || 'Google Haritalar’da yol tarifi al'}</span></a></li>
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const chips = document.querySelectorAll('.qchip');
+  const cards = document.querySelectorAll('.answer-card');
+  const empty = document.querySelector('.answer-empty');
+  chips.forEach((c) => c.addEventListener('click', () => {
+    chips.forEach((x) => x.setAttribute('aria-checked', String(x === c)));
+    cards.forEach((a) => { a.hidden = a.dataset.i !== c.dataset.i; });
+    empty.hidden = true;
+  }));
+</script>

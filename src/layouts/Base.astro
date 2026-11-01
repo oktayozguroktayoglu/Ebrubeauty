@@ -1,0 +1,93 @@
+---
+import '@fontsource/instrument-serif/400.css';
+import '@fontsource/instrument-serif/400-italic.css';
+import '@fontsource-variable/manrope';
+import '../styles/global.css';
+import Butterfly from '../components/Butterfly.astro';
+import Icon from '../components/Icon.astro';
+import { NAME, FULL_NAME, PHONE, PHONE_TEL, INSTAGRAM, INSTAGRAM_URL, wa, SLOGAN, ADDRESS, mapsLink } from '../data/site.js';
+const { title = `${FULL_NAME} | Cilt Bakımı, Hydrafacial, Lazer Epilasyon`, description = `${FULL_NAME}: cilt bakımı, Hydrafacial, lazer epilasyon, G5 selülit, bölgesel incelme, protez tırnak ve kalıcı makyaj. Randevu: ${PHONE}.` } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ld = { '@context': 'https://schema.org', '@type': 'BeautySalon', name: FULL_NAME, telephone: '+905379161036', url: new URL(base, Astro.site).href, image: new URL(base + 'img/lounge.jpg', Astro.site).href, sameAs: [INSTAGRAM_URL], slogan: SLOGAN, ...(ADDRESS ? { address: ADDRESS } : {}) };
+---
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <meta name="theme-color" content="#1b1420" />
+  <link rel="icon" href={`${base}favicon.png`} type="image/png" />
+  <link rel="apple-touch-icon" href={`${base}apple-touch-icon.png`} />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="tr_TR" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={new URL(base + 'img/lounge.jpg', Astro.site).href} />
+  <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+</head>
+<body>
+  <a class="skip" href="#main">İçeriğe geç</a>
+  <header class="nav" id="top">
+    <div class="wrap nav-in">
+      <a class="brand" href={base} aria-label={`${NAME} ana sayfa`}>
+        <Butterfly size={38} />
+        <span><b>EBRU</b> <i>beauty</i></span>
+      </a>
+      <nav class="links" aria-label="Ana menü">
+        <a href={`${base}#hizmetler`}>Hizmetler</a>
+        <a href={`${base}#test`}>Sana hangisi?</a>
+        <a href={`${base}#mekan`}>Mekan</a>
+        <a href={`${base}#iletisim`}>İletişim</a>
+      </nav>
+      <a class="pill pill-gold nav-cta" href={wa()} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /> Randevu al</a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mmenu" aria-label="Menüyü aç"><Icon name="menu" /></button>
+    </div>
+    <div class="mmenu" id="mmenu" hidden>
+      <a href={`${base}#hizmetler`}>Hizmetler</a>
+      <a href={`${base}#test`}>Sana hangisi?</a>
+      <a href={`${base}#mekan`}>Mekan</a>
+      <a href={`${base}#iletisim`}>İletişim</a>
+      <a class="pill pill-gold" href={wa()} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /> WhatsApp’tan randevu al</a>
+    </div>
+  </header>
+
+  <main id="main"><slot /></main>
+
+  <footer class="foot">
+    <div class="wrap foot-in">
+      <div>
+        <img class="foot-logo" src={`${base}brand/logo-full.svg`} alt={FULL_NAME} width="150" height="159" loading="lazy" />
+        <p class="foot-slogan">{SLOGAN} ✦</p>
+      </div>
+      <ul class="foot-links">
+        <li><a href={PHONE_TEL}><Icon name="phone" size={18} /> {PHONE}</a></li>
+        <li><a href={wa()} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /> WhatsApp</a></li>
+        <li><a href={INSTAGRAM_URL} target="_blank" rel="noopener"><Icon name="instagram" size={18} /> @{INSTAGRAM}</a></li>
+        <li><a href={mapsLink()} target="_blank" rel="noopener"><Icon name="pin" size={18} /> {ADDRESS || 'Haritada gör'}</a></li>
+      </ul>
+    </div>
+    <p class="wrap copy">© {new Date().getFullYear()} {FULL_NAME}</p>
+  </footer>
+
+  <a class="fab" href={wa()} target="_blank" rel="noopener" aria-label="WhatsApp’tan yaz"><Icon name="whatsapp" size={28} /></a>
+
+  <script>
+    const btn = document.querySelector('.menu-btn');
+    const menu = document.getElementById('mmenu');
+    btn?.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!open));
+      menu.hidden = open;
+    });
+    menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => { menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); }));
+    const nav = document.querySelector('.nav');
+    addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 20), { passive: true });
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+  </script>
+</body>
+</html>
