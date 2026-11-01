@@ -5,8 +5,8 @@ import '@fontsource-variable/manrope';
 import '../styles/global.css';
 import Butterfly from '../components/Butterfly.astro';
 import Icon from '../components/Icon.astro';
-import { NAME, FULL_NAME, PHONE, PHONE_TEL, INSTAGRAM, INSTAGRAM_URL, wa, SLOGAN, ADDRESS, mapsLink } from '../data/site.js';
-const { title = `${FULL_NAME} | Cilt Bakımı, Hydrafacial, Lazer Epilasyon`, description = `${FULL_NAME}: cilt bakımı, Hydrafacial, lazer epilasyon, G5 selülit, bölgesel incelme, protez tırnak ve kalıcı makyaj. Randevu: ${PHONE}.` } = Astro.props;
+import { services, NAME, FULL_NAME, PHONE, PHONE_TEL, INSTAGRAM, INSTAGRAM_URL, wa, SLOGAN, ADDRESS, mapsLink } from '../data/site.js';
+const { ogImage = 'img/lounge.jpg', jsonLd = [], title = `${FULL_NAME} | Cilt Bakımı, Hydrafacial, Lazer Epilasyon`, description = `${FULL_NAME}: cilt bakımı, Hydrafacial, lazer epilasyon, G5 selülit, bölgesel incelme, protez tırnak ve kalıcı makyaj. Randevu: ${PHONE}.` } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ld = { '@context': 'https://schema.org', '@type': 'BeautySalon', name: FULL_NAME, telephone: '+905379161036', url: new URL(base, Astro.site).href, image: new URL(base + 'img/lounge.jpg', Astro.site).href, sameAs: [INSTAGRAM_URL], slogan: SLOGAN, ...(ADDRESS ? { address: ADDRESS } : {}) };
@@ -26,8 +26,10 @@ const ld = { '@context': 'https://schema.org', '@type': 'BeautySalon', name: FUL
   <meta property="og:locale" content="tr_TR" />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:image" content={new URL(base + 'img/lounge.jpg', Astro.site).href} />
+  <meta property="og:image" content={new URL(base + ogImage, Astro.site).href} />
+  <meta name="twitter:card" content="summary_large_image" />
   <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+  {jsonLd.map((j) => <script type="application/ld+json" set:html={JSON.stringify(j)} />)}
 </head>
 <body>
   <a class="skip" href="#main">İçeriğe geç</a>
@@ -63,6 +65,9 @@ const ld = { '@context': 'https://schema.org', '@type': 'BeautySalon', name: FUL
         <img class="foot-logo" src={`${base}brand/logo-full.svg`} alt={FULL_NAME} width="150" height="159" loading="lazy" />
         <p class="foot-slogan">{SLOGAN} ✦</p>
       </div>
+      <ul class="foot-links foot-svc">
+        {services.map((s) => <li><a href={`${base}${s.slug}/`}>{s.title}</a></li>)}
+      </ul>
       <ul class="foot-links">
         <li><a href={PHONE_TEL}><Icon name="phone" size={18} /> {PHONE}</a></li>
         <li><a href={wa()} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /> WhatsApp</a></li>

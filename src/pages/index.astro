@@ -59,10 +59,12 @@ const quiz = concerns.map((c) => ({ ...c, title: byslug[c.service].title, text: 
         {services.map((s, i) => (
           <li class={`card c${i} reveal`}>
             <div class="card-top"><span class="ic"><Icon name={s.icon} size={26} /></span><span class="tag">#{s.tag}</span></div>
-            <h3>{s.title}</h3>
+            <h3><a class="card-title" href={`${base}${s.slug}/`}>{s.title}</a></h3>
             <p>{s.short}</p>
-            <details><summary>Detay</summary><p>{s.detail}</p></details>
-            <a class="card-link" href={wa(`Merhaba! ${s.title} hakkında bilgi ve randevu almak istiyorum ✨`)} target="_blank" rel="noopener">Bilgi al <Icon name="arrow" size={18} /></a>
+            <div class="card-actions">
+              <a class="card-link" href={`${base}${s.slug}/`}>Detaylı incele <Icon name="arrow" size={18} /></a>
+              <a class="card-wa" href={wa(`Merhaba! ${s.title} hakkında bilgi ve randevu almak istiyorum ✨`)} target="_blank" rel="noopener" aria-label={`${s.title} için WhatsApp’tan yaz`}><Icon name="whatsapp" size={18} /></a>
+            </div>
           </li>
         ))}
       </ul>
@@ -88,7 +90,7 @@ const quiz = concerns.map((c) => ({ ...c, title: byslug[c.service].title, text: 
               <p class="answer-kicker">Senin için önerimiz</p>
               <h3>{q.title}</h3>
               <p>{q.text}</p>
-              <a class="pill pill-gold" href={q.wa} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /> Bunu sor</a>
+              <div class="answer-cta"><a class="pill pill-gold" href={q.wa} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /> Bunu sor</a><a class="pill pill-ghost" href={`${base}${q.service}/`}>Detaylı incele</a></div>
             </div>
           ))}
         </div>

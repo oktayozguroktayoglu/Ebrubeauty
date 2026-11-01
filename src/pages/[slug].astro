@@ -1,0 +1,89 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { services, wa, PHONE, PHONE_TEL, FULL_NAME } from '../data/site.js';
+import { pages } from '../data/pages.js';
+export function getStaticPaths() {
+  return services.map((s) => ({ params: { slug: s.slug }, props: { s } }));
+}
+const { s } = Astro.props;
+const d = pages[s.slug];
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const pic = (g) => g.own
+  ? { src: `${base}img/${g.own}-800.webp`, set: `${base}img/${g.own}-800.webp 800w, ${base}img/${g.own}-1600.webp 1600w`, og: `img/${g.own}.jpg` }
+  : { src: `${base}img/${g.img}-800.webp`, set: `${base}img/${g.img}-800.webp 800w, ${base}img/${g.img}-1600.webp 1600w`, og: `img/${g.img}.jpg` };
+const hero = pic(d.hero);
+const others = services.filter((x) => x.slug !== s.slug);
+const url = new URL(`${base}${s.slug}/`, Astro.site).href;
+const ld = [
+  { '@context': 'https://schema.org', '@type': 'Service', name: s.title, serviceType: s.title, description: d.seoDesc, url, image: new URL(base + hero.og, Astro.site).href,
+    provider: { '@type': 'BeautySalon', name: FULL_NAME, telephone: '+905379161036', url: new URL(base, Astro.site).href } },
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: d.faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Ana sayfa', item: new URL(base, Astro.site).href },
+    { '@type': 'ListItem', position: 2, name: 'Hizmetler', item: new URL(`${base}#hizmetler`, Astro.site).href },
+    { '@type': 'ListItem', position: 3, name: s.title, item: url } ] },
+];
+const waMsg = wa(`Merhaba! ${s.title} hakkında bilgi ve randevu almak istiyorum ✨`);
+---
+<Base title={d.seoTitle} description={d.seoDesc} ogImage={hero.og} jsonLd={ld}>
+  <section class="svc-hero">
+    <div class="aurora" aria-hidden="true"><span></span><span></span></div>
+    <div class="wrap svc-hero-in">
+      <div>
+        <nav class="crumbs" aria-label="Sayfa yolu"><a href={base}>Ana sayfa</a> / <a href={`${base}#hizmetler`}>Hizmetler</a> / <span>{s.title}</span></nav>
+        <p class="eyebrow"><span class="dot"></span> #{s.tag}</p>
+        <h1>{s.title}</h1>
+        <p class="hero-sub">{d.lead}</p>
+        <div class="hero-cta">
+          <a class="pill pill-gold big" href={waMsg} target="_blank" rel="noopener"><Icon name="whatsapp" size={20} /> WhatsApp’tan sor</a>
+          <a class="pill pill-ghost big" href={PHONE_TEL}><Icon name="phone" size={20} /> {PHONE}</a>
+        </div>
+      </div>
+      <figure class="svc-hero-img">
+        <img src={hero.src} srcset={hero.set} sizes="(max-width: 900px) 90vw, 460px" alt={d.hero.alt} width="800" height="1000" fetchpriority="high" />
+      </figure>
+    </div>
+  </section>
+
+  <div class="wrap svc-body">
+    <article class="svc-article">
+      {d.sections.map((sec) => (
+        <section class="svc-sec">
+          <h2>{sec.h}</h2>
+          {sec.p && sec.p.map((t) => <p>{t}</p>)}
+          {sec.list && <ul class="ticks">{sec.list.map((t) => <li>{t}</li>)}</ul>}
+          {sec.steps && <ol class="mini-steps">{sec.steps.map(([h, t], i) => <li><span>{String(i + 1).padStart(2, '0')}</span><div><h3>{h}</h3><p>{t}</p></div></li>)}</ol>}
+        </section>
+      ))}
+
+      {d.gallery.length > 0 && (
+        <div class={`svc-gal n${d.gallery.length}`}>
+          {d.gallery.map((g) => { const p = pic(g); return <figure><img src={p.src} srcset={p.set} sizes="(max-width: 700px) 100vw, 380px" alt={g.alt} width="800" height="800" loading="lazy" /></figure>; })}
+        </div>
+      )}
+
+      <section class="svc-sec">
+        <h2>Sık sorulan sorular</h2>
+        <div class="faq">
+          {d.faq.map(([q, a]) => <details><summary>{q}</summary><p>{a}</p></details>)}
+        </div>
+        <p class="note">Bu sayfadaki bilgiler genel bilgilendirme amaçlıdır. Sana uygun işlem, seans sayısı ve fiyat ön görüşmede birlikte belirlenir.</p>
+      </section>
+    </article>
+
+    <aside class="svc-side">
+      <div class="side-card">
+        <p class="eyebrow dark"><span class="dot"></span> Randevu</p>
+        <h3>{s.title} için yer ayıralım mı?</h3>
+        <p>Fiyat ve uygun saatler için bize yaz, hemen dönelim.</p>
+        <a class="pill pill-gold" href={waMsg} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /> WhatsApp</a>
+        <a class="side-phone" href={PHONE_TEL}><Icon name="phone" size={18} /> {PHONE}</a>
+      </div>
+      <div class="side-card light">
+        <h3>Diğer hizmetler</h3>
+        <ul class="side-list">{others.map((o) => <li><a href={`${base}${o.slug}/`}><Icon name={o.icon} size={20} /> {o.title}</a></li>)}</ul>
+      </div>
+    </aside>
+  </div>
+</Base>
