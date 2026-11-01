@@ -40,7 +40,12 @@ const ld = { '@context': 'https://schema.org', '@type': 'BeautySalon', name: FUL
         <span><b>EBRU</b> <i>beauty</i></span>
       </a>
       <nav class="links" aria-label="Ana menü">
-        <a href={`${base}#hizmetler`}>Hizmetler</a>
+        <div class="dd">
+          <a href={`${base}#hizmetler`} class="dd-btn" aria-haspopup="true">Hizmetler <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+          <div class="dd-menu">
+            {services.map((s) => <a href={`${base}${s.slug}/`} aria-current={Astro.url.pathname.endsWith(`/${s.slug}/`) ? 'page' : undefined}><Icon name={s.icon} size={18} /> {s.title}</a>)}
+          </div>
+        </div>
         <a href={`${base}#test`}>Sana hangisi?</a>
         <a href={`${base}#mekan`}>Mekan</a>
         <a href={`${base}#iletisim`}>İletişim</a>
@@ -49,7 +54,10 @@ const ld = { '@context': 'https://schema.org', '@type': 'BeautySalon', name: FUL
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mmenu" aria-label="Menüyü aç"><Icon name="menu" /></button>
     </div>
     <div class="mmenu" id="mmenu" hidden>
-      <a href={`${base}#hizmetler`}>Hizmetler</a>
+      <p class="mm-label">Hizmetler</p>
+      <div class="mm-svc">
+        {services.map((s) => <a href={`${base}${s.slug}/`}><Icon name={s.icon} size={18} /> {s.title}</a>)}
+      </div>
       <a href={`${base}#test`}>Sana hangisi?</a>
       <a href={`${base}#mekan`}>Mekan</a>
       <a href={`${base}#iletisim`}>İletişim</a>
